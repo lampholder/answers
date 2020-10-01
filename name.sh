@@ -18,7 +18,7 @@ REPLACEMENT_DASHES=$(echo $REPLACEMENT | sed 's/ /-/g')
 REPLACEMENT_UNDERSCORES=$(echo $REPLACEMENT | sed 's/ /_/g')
 
 echo "Renaming (git mv) files and directories:"
-for file_or_directory in $(find . -name ".*$PLACEHOLDER_DASHES.*" -depth); do
+for file_or_directory in $(find . -depth -name "*$PLACEHOLDER_DASHES*"); do
     echo $file_or_directory
     renamed_file_or_directory=$(echo $file_or_directory | sed -E "s/(.*)$PLACEHOLDER_DASHES/\1$REPLACEMENT_DASHES/g")
     if [[ $file_or_directory != $renamed_file_or_directory ]]; then
@@ -26,7 +26,7 @@ for file_or_directory in $(find . -name ".*$PLACEHOLDER_DASHES.*" -depth); do
         echo " - $file_or_directory -> $renamed_file_or_directory"
     fi
 done
-for file_or_directory in $(find . -name ".*$PLACEHOLDER_UNDERSCORES.*" -depth); do
+for file_or_directory in $(find . -depth -name "*$PLACEHOLDER_UNDERSCORES*"); do
     echo $file_or_directory
     renamed_file_or_directory=$(echo $file_or_directory | sed -E "s/(.*)$PLACEHOLDER_UNDERSCORES/\1$REPLACEMENT_UNDERSCORES/g")
     if [[ $file_or_directory != $renamed_file_or_directory ]]; then
